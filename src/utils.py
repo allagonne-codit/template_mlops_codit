@@ -9,7 +9,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import dill
 from sklearn.metrics import f1_score, accuracy_score, roc_auc_score, precision_score, recall_score
-from imblearn.over_sampling import SMOTE
+from imblearn.over_sampling import SMOTE, RandomOverSampler
 from sklearn.feature_selection import mutual_info_classif
 from sklearn.model_selection import cross_validate, GridSearchCV, RandomizedSearchCV
 
@@ -66,23 +66,35 @@ def class_imbalance(y_train,thresh):
         CustomException(e,sys)
 
 ## handling class imbalance        
-def handling_class_imbalance(X,y,thresh):
+def handling_class_imbalance(X, y, thresh):
     try:
-        if class_imbalance(y,thresh):
+        imbalance = class_imbalance(y, thresh)
+        print(f"Is class imbalanced: {imbalance}")  # Debug print
+        if imbalance:
             logging.info("Target class is imbalanced.")
             
-            smote = SMOTE()
-            X_balanced, y_balanced = smote.fit_resample(X,y)
+            # Count the number of samples in the minority class
+            minority_class = min(Counter(y), key=Counter(y).get)
+            minority_count = Counter(y)[minority_class]
             
-            logging.info("Imbalancing of the data has been fixed")
+            if minority_count >= 6:  # SMOTE requires at least 6 samples of the minority class
+                smote = SMOTE()
+                X_balanced, y_balanced = smote.fit_resample(X, y)
+                logging.info("Imbalancing of the data has been fixed using SMOTE")
+            else:
+                ros = RandomOverSampler(random_state=42)
+                X_balanced, y_balanced = ros.fit_resample(X, y)
+                logging.info("Imbalancing of the data has been fixed using RandomOverSampler")
+            
             return X_balanced, y_balanced
         
         else:
-            logging.info("Target class is already imbalanced.")
-            return X,y
+            logging.info("Target class is already balanced.")
+            return X, y  # Return original data if already balanced
     
     except Exception as e:
-        CustomException(e,sys)
+        print(f"Exception in handling_class_imbalance: {e}")  # Debug print
+        raise CustomException(e, sys)
         
 ## K-Fold cross validation
 def cross_validate_model(model,X,y,n_folds):
