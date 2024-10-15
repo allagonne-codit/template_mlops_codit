@@ -1,6 +1,6 @@
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'mlops-best-practices')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import pandas as pd
 from collections import Counter
@@ -26,3 +26,5 @@ def test_handling_class_imbalance():
     thresh = 50  # 50% imbalance threshold
     result = handling_class_imbalance(X, y, thresh)
     assert result is not None  # Assuming the function returns some value
+    assert len(result[0]) == len(result[1])  # Ensure X and y are balanced
+    assert len(result[0]) > len(X)  # Ensure balancing increased the number of samples
