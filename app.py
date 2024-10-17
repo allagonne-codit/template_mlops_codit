@@ -6,7 +6,7 @@ import sys
 import os
 from src.pipeline.predict_pipeline import PredictPipeline, CustomData
 from src.exception import CustomException
-from src.logger import logging
+from src.data_generate.logger import logging
 from src.pipeline.validation_pipeline import CustomDataModel
 
 
