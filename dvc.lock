@@ -9,8 +9,8 @@ stages:
       size: 5008
     - path: src/components/model_trainer.py
       hash: md5
-      md5: 7a7e4f2e94c8c6724c8e1b2e1da4f91e
-      size: 4337
+      md5: da6eff7da713f4cadbe463e7d84f6a3e
+      size: 4435
     - path: src/tracking/params.py
       hash: md5
       md5: 971175c1113db19a87385941420f3aea
@@ -18,13 +18,13 @@ stages:
     outs:
     - path: artifacts/raw.csv
       hash: md5
-      md5: ee8eb25111a586a44baba65b31d1ade8
-      size: 978246
+      md5: c5c3479c035dae99008c648c79278d2c
+      size: 549681
     - path: artifacts/test.csv
       hash: md5
-      md5: 8ad04bc49656380163d5ec763d3b193f
-      size: 293676
+      md5: 7ae538eea10c0d24ebdaf558000d23a8
+      size: 165005
     - path: artifacts/train.csv
       hash: md5
-      md5: dc2bae8c99454ac6539e96b7431f3563
-      size: 684681
+      md5: e4761797cd2aa94337c36424c12e0ff3
+      size: 384787
